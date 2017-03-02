@@ -1,0 +1,68 @@
+description = 'lesson-3'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+        classpath "gradle.plugin.se.bjurr.violations:violation-comments-to-github-gradle-plugin:1.22"
+    }
+}
+
+configurations {
+    provided
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+apply plugin: "org.springframework.boot"
+apply plugin: "java"
+apply plugin: 'eclipse'
+apply plugin: "idea"
+
+idea {
+    module {
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    compile("com.google.guava:guava:17.0")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
+apply plugin: "se.bjurr.violations.violation-comments-to-github-gradle-plugin"
+
+task violationCommentsToGitHub(type: se.bjurr.violations.comments.github.plugin.gradle.ViolationCommentsToGitHubTask) {
+    repositoryOwner = "tomasbjerre";
+    repositoryName = "violations-test"
+    pullRequestId = System.properties['GITHUB_PULLREQUESTID']
+    username = System.properties['GITHUB_USERNAME']
+    password = System.properties['GITHUB_PASSWORD']
+    oAuth2Token = System.properties['GITHUB_OAUTH2TOKEN']
+    gitHubUrl = "https://api.github.com/"
+    createCommentWithAllSingleFileComments = false
+    createSingleFileComments = true
+    commentOnlyChangedContent = true
+    violations = [
+            ["FINDBUGS",   ".", ".*/findbugs/.*\\.xml\$"],
+            ["PMD",        ".", ".*/pmd/.*\\.xml\$"],
+            ["CHECKSTYLE", ".", ".*/checkstyle/.*\\.xml\$"],
+            ["JSHINT",     ".", ".*/jshint/.*\\.xml\$"],
+            ["CSSLINT",    ".", ".*/csslint/.*\\.xml\$"]
+    ]
+}

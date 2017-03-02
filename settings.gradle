@@ -1,0 +1,3 @@
+rootProject.name = 'spring-framework-getting-started'
+include 'lesson-3'
+
