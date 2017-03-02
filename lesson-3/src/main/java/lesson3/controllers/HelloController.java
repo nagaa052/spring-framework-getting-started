@@ -10,6 +10,11 @@ public class HelloController {
 
     @GetMapping
     public String getHello() {
+        String message = null;
+        if (true) {
+            System.out.printf("文字数" + message.length());
+        }
+
         return "Hello!!!!";
     }
 }
