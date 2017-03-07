@@ -1,5 +1,6 @@
 package lesson3.controllers;
 
+import java.util.Objects;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,8 @@ public class HelloController {
   @GetMapping("/hoge")
   public String getHogeHoge() {
     String message = null;
-    if (true) {
+    
+    if (!Objects.isNull(message)) {
       System.out.printf("文字数" + message.length());
     }
 
