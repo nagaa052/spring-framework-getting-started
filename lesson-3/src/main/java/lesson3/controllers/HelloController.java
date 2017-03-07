@@ -17,4 +17,14 @@ public class HelloController {
 
     return "Hello!!!!";
   }
+
+  @GetMapping("/hoge")
+  public String getHogeHoge() {
+    String message = null;
+    if (true) {
+      System.out.printf("文字数" + message.length());
+    }
+
+    return "Hello!!!!";
+  }
 }
