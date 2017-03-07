@@ -14,6 +14,7 @@ public class HelloController {
         if (true) {
             System.out.printf("文字数" + message.length());
         }
+        message.length();
 
         return "Hello!!!!";
     }
